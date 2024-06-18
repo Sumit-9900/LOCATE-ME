@@ -31,7 +31,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         backgroundColor: Colors.greenAccent.shade400,
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               ref.read(userNotifierProvider.notifier).logOut(context);
             },
             icon: const Icon(Icons.logout),

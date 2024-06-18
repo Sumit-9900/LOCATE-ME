@@ -20,3 +20,16 @@ Locate Me is a Flutter application that tracks the user's location and calculate
 
     ```sh
    cd locate_me
+
+3. **Install Dependencies:**
+
+    ```sh
+    flutter pub get
+
+4. **Run the app:**
+
+    1. Connect your Android or iOS device, or launch an emulator/simulator as per your development setup.
+
+    2. ```sh
+    flutter run
+
