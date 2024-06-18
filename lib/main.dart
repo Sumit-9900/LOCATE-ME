@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:locate_me/firebase_options.dart';
 import 'package:locate_me/models/locationdata_model.dart';
 import 'package:locate_me/models/user_model.dart';
 import 'package:locate_me/screens/home_screen.dart';
@@ -15,6 +17,9 @@ void main() async {
       statusBarColor: Colors.transparent,
     ),
   );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(LocationDataAdapter());

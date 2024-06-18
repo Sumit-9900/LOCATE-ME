@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218548033912",
+    "project_id": "locateme-fd587",
+    "storage_bucket": "locateme-fd587.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218548033912:android:f5f3ff82037bbc1708108d",
+        "android_client_info": {
+          "package_name": "com.example.locate_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGZB9STyA3dfSKTz4OC-NAiKoxNqB9iz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
