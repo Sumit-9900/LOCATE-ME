@@ -17,4 +17,6 @@ Locate Me is a Flutter application that tracks the user's location and calculate
    git clone https://github.com/Sumit-9900/LOCATE-ME
 
 2. **Navigate to the project directory:**   
+
+    ```sh
    cd locate_me
