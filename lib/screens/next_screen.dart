@@ -31,8 +31,11 @@ class _NextScreenState extends State<NextScreen> {
           elevation: 1.0,
           backgroundColor: Colors.greenAccent.shade400,
         ),
-        body: const Center(
-          child: Text('No Data!'),
+        body: Center(
+          child: Text(
+            'No Data!',
+            style: Style.style2,
+          ),
         ),
       );
     }

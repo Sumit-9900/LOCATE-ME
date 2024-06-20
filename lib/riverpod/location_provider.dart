@@ -35,7 +35,7 @@ class LocationNotifier extends StateNotifier<LocationState> {
     super.dispose();
   }
 
-  Future fetchPosition() async {
+  Future<void> fetchPosition() async {
     try {
       bool serviceEnabled;
       LocationPermission permission;

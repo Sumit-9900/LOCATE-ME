@@ -27,11 +27,10 @@ class UserNotifier extends StateNotifier<List<User>> {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (route) => false);
         successMssg('Login Successfull!');
-        break;
-      } else {
-        errorMssg('Login Unsuccessfull!');
+        return;
       }
     }
+    errorMssg('Login Unsuccessfull!');
   }
 
   void logOut(BuildContext context) {

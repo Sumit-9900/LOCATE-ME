@@ -41,15 +41,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: PopScope(
         canPop: false,
         onPopInvoked: (didPop) async {
-          if (didPop) {
-            return;
-          } else {
-            final res = await ref
-                .read(locationNotifierProvider.notifier)
-                .onWillPop(context);
-            if (res) {
-              exit(0);
-            }
+          final res = await ref
+              .read(locationNotifierProvider.notifier)
+              .onWillPop(context);
+          if (res) {
+            exit(0);
           }
         },
         child: Center(
