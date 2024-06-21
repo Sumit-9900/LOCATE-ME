@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:locate_me/riverpod/userfuture_provider.dart';
 import 'package:locate_me/riverpod/userbox_provider.dart';
+import 'package:locate_me/services/messages.dart';
 import 'package:locate_me/services/textstyle.dart';
 import 'package:locate_me/widgets/button.dart';
 import 'package:locate_me/widgets/text_form.dart';
@@ -97,12 +99,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ? MediaQuery.of(context).size.width / 2
                         : null,
                     text: 'Login',
-                    onPressedLogin: () {
+                    onPressedLogin: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        ref
-                            .read(userNotifierProvider.notifier)
-                            .getUser(phoneNumber, password, context);
+                        final params = {
+                          'phoneNumber': phoneNumber,
+                          'password': password,
+                        };
+                        final user =
+                            await ref.read(userFutureProvider(params).future);
+
+                        if (user && context.mounted) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/home', (route) => false);
+                          successMssg('Login Successfull!');
+                        } else {
+                          errorMssg('Login Unsuccessfull!');
+                        }
                       }
                       phoneController.clear();
                       passController.clear();

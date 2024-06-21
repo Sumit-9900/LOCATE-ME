@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:locate_me/models/user_model.dart';
 import 'package:locate_me/riverpod/hive_box.dart';
-import 'package:locate_me/services/messages.dart';
 
-class UserNotifier extends StateNotifier<List<User>> {
+class UserNotifier extends StateNotifier<User> {
   final Box<User> userBox;
-  UserNotifier(this.userBox) : super([]);
+  UserNotifier(this.userBox) : super(User(phoneNumber: '', password: ''));
 
   List<User> users = [];
 
@@ -16,32 +14,12 @@ class UserNotifier extends StateNotifier<List<User>> {
     userBox.put('user2', User(phoneNumber: '8090809090', password: '9876'));
   }
 
-  void getUser(String phoneNumber, String password, BuildContext context) {
-    users.clear();
-    for (int i = 0; i < userBox.keys.length; i++) {
-      users.add(userBox.getAt(i)!);
-    }
-    for (int i = 0; i < userBox.keys.length; i++) {
-      if (users[i].phoneNumber == phoneNumber &&
-          users[i].password == password) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (route) => false);
-        successMssg('Login Successfull!');
-        return;
-      }
-    }
-    errorMssg('Login Unsuccessfull!');
-  }
-
-  void logOut(BuildContext context) {
+  void logOut() {
     userBox.deleteAll(['user1', 'user2']);
-    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-    successMssg('LogOut Successfully!');
   }
 }
 
-final userNotifierProvider =
-    StateNotifierProvider<UserNotifier, List<User>>((ref) {
+final userNotifierProvider = StateNotifierProvider<UserNotifier, User>((ref) {
   final userBox = ref.watch(userBoxProvider);
   return UserNotifier(userBox);
 });

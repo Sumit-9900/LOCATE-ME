@@ -32,7 +32,7 @@ _$PersonImpl _$$PersonImplFromJson(Map<String, dynamic> json) => _$PersonImpl(
       id: (json['id'] as num).toInt(),
       email: json['email'] as String,
       firstName: json['first_name'] as String,
-      lastName: json['last_name'] as String,
+      lastName: json['last_name'] as String?,
       avatar: json['avatar'] as String? ??
           'https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg',
     );

@@ -296,7 +296,7 @@ mixin _$Person {
   @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
-  String get lastName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -313,7 +313,7 @@ abstract class $PersonCopyWith<$Res> {
       {int id,
       String email,
       @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'last_name') String? lastName,
       String avatar});
 }
 
@@ -333,7 +333,7 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
     Object? id = null,
     Object? email = null,
     Object? firstName = null,
-    Object? lastName = null,
+    Object? lastName = freezed,
     Object? avatar = null,
   }) {
     return _then(_value.copyWith(
@@ -349,10 +349,10 @@ class _$PersonCopyWithImpl<$Res, $Val extends Person>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
@@ -372,7 +372,7 @@ abstract class _$$PersonImplCopyWith<$Res> implements $PersonCopyWith<$Res> {
       {int id,
       String email,
       @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'last_name') String? lastName,
       String avatar});
 }
 
@@ -390,7 +390,7 @@ class __$$PersonImplCopyWithImpl<$Res>
     Object? id = null,
     Object? email = null,
     Object? firstName = null,
-    Object? lastName = null,
+    Object? lastName = freezed,
     Object? avatar = null,
   }) {
     return _then(_$PersonImpl(
@@ -406,10 +406,10 @@ class __$$PersonImplCopyWithImpl<$Res>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
@@ -425,7 +425,7 @@ class _$PersonImpl implements _Person {
       {required this.id,
       required this.email,
       @JsonKey(name: 'first_name') required this.firstName,
-      @JsonKey(name: 'last_name') required this.lastName,
+      @JsonKey(name: 'last_name') this.lastName,
       this.avatar =
           'https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg'});
 
@@ -441,7 +441,7 @@ class _$PersonImpl implements _Person {
   final String firstName;
   @override
   @JsonKey(name: 'last_name')
-  final String lastName;
+  final String? lastName;
   @override
   @JsonKey()
   final String avatar;
@@ -489,7 +489,7 @@ abstract class _Person implements Person {
       {required final int id,
       required final String email,
       @JsonKey(name: 'first_name') required final String firstName,
-      @JsonKey(name: 'last_name') required final String lastName,
+      @JsonKey(name: 'last_name') final String? lastName,
       final String avatar}) = _$PersonImpl;
 
   factory _Person.fromJson(Map<String, dynamic> json) = _$PersonImpl.fromJson;
@@ -503,7 +503,7 @@ abstract class _Person implements Person {
   String get firstName;
   @override
   @JsonKey(name: 'last_name')
-  String get lastName;
+  String? get lastName;
   @override
   String get avatar;
   @override

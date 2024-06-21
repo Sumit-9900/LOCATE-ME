@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:locate_me/models/nextscreen_arguments.dart';
 import 'package:locate_me/riverpod/location_provider.dart';
 import 'package:locate_me/riverpod/userbox_provider.dart';
+import 'package:locate_me/services/messages.dart';
 import 'package:locate_me/services/textstyle.dart';
 import 'package:locate_me/widgets/button.dart';
 
@@ -32,7 +33,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              ref.read(userNotifierProvider.notifier).logOut(context);
+              ref.read(userNotifierProvider.notifier).logOut();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/', (route) => false);
+              successMssg('LogOut Successfully!');
             },
             icon: const Icon(Icons.logout),
           ),

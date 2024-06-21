@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:locate_me/models/nextscreen_arguments.dart';
-import 'package:locate_me/riverpod/api_model.dart';
+import 'package:locate_me/riverpod/api.dart';
 import 'package:locate_me/services/textstyle.dart';
 
 class NextScreen extends StatefulWidget {
@@ -120,43 +118,42 @@ class _NextScreenState extends State<NextScreen> {
           const Divider(color: Colors.black38),
           Consumer(
             builder: (context, ref, child) {
-              return FutureBuilder(
-                future: ref.read(apiModelProvider.notifier).fetchPersonData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
-                  } else if (!snapshot.hasData || snapshot.data == null) {
-                    log('Error, ${snapshot.data}');
-                  } else if (snapshot.hasError) {
-                    log('Error occurred while fetching data!, ${snapshot.error}');
-                  }
-                  final data = snapshot.data;
+              final persons = ref.watch(apiProvider);
+              return persons.when(
+                data: (persons) {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: data!.length,
+                      itemCount: persons.length,
                       itemBuilder: (context, index) {
+                        final person = persons[index];
                         return Card(
                           color: Colors.greenAccent.shade200,
-                          elevation: 3,
+                          elevation: 3.0,
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey,
-                              backgroundImage: NetworkImage(data[index].avatar),
+                              backgroundImage: NetworkImage(person.avatar),
                             ),
                             title: Text(
-                              '${data[index].firstName} ${data[index].lastName}',
+                              '${person.firstName} ${person.lastName}',
                               style: Style.style4,
                             ),
                             subtitle: Text(
-                              data[index].email,
+                              person.email,
                               style: Style.style5,
                             ),
                           ),
                         );
                       },
                     ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Text('Error : $error, $stackTrace');
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 },
               );

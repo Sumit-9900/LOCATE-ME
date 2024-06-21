@@ -3,12 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:locate_me/models/person_model.dart';
 import 'package:locate_me/services/const.dart';
 
-class ApiModel extends StateNotifier<List<Person>> {
-  ApiModel() : super([]);
+final apiProvider = FutureProvider(
+  (ref) async {
+    final dio = Dio();
 
-  final dio = Dio();
-
-  Future<List<Person>> fetchPersonData() async {
     try {
       final response = await dio.get(apiUrl);
       if (response.statusCode == 200) {
@@ -20,9 +18,5 @@ class ApiModel extends StateNotifier<List<Person>> {
     } catch (e) {
       throw Exception(e);
     }
-  }
-}
-
-final apiModelProvider = StateNotifierProvider<ApiModel, List<Person>>((ref) {
-  return ApiModel();
-});
+  },
+);

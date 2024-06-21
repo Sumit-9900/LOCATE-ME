@@ -24,7 +24,7 @@ class Person with _$Person {
     required int id,
     required String email,
     @JsonKey(name: 'first_name') required String firstName,
-    @JsonKey(name: 'last_name') required String lastName,
+    @JsonKey(name: 'last_name') String? lastName,
     @Default(
         'https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg')
     String avatar,
