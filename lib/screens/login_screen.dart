@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:locate_me/riverpod/hive_box.dart';
 import 'package:locate_me/riverpod/userfuture_provider.dart';
 import 'package:locate_me/riverpod/userbox_provider.dart';
 import 'package:locate_me/services/messages.dart';
@@ -102,6 +103,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onPressedLogin: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+
+                        final isLogin = ref.read(isLoginBox);
+
                         final params = {
                           'phoneNumber': phoneNumber,
                           'password': password,
@@ -112,6 +116,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         if (user && context.mounted) {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/home', (route) => false);
+                          isLogin.put('isLogin', true);
                           successMssg('Login Successfull!');
                         } else {
                           errorMssg('Login Unsuccessfull!');

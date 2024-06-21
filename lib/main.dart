@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:locate_me/firebase_options.dart';
 import 'package:locate_me/models/locationdata_model.dart';
 import 'package:locate_me/models/user_model.dart';
+import 'package:locate_me/riverpod/hive_box.dart';
 import 'package:locate_me/screens/home_screen.dart';
 import 'package:locate_me/screens/login_screen.dart';
 import 'package:locate_me/screens/next_screen.dart';
@@ -19,12 +20,13 @@ void main() async {
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(LocationDataAdapter());
   await Hive.openBox<User>('users');
   await Hive.openBox<LocationData>('location_data');
+  await Hive.openBox<bool>('isLogin');
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -44,7 +46,7 @@ class MyApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: ref.read(isLoginBox).get('isLogin') == true ? '/home' : '/',
       routes: {
         '/': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),

@@ -10,3 +10,7 @@ final userBoxProvider = Provider<Box<User>>((ref) {
 final locationBoxProvider = Provider<Box<LocationData>>((ref) {
   return Hive.box<LocationData>('location_data');
 });
+
+final isLoginBox = Provider<Box<bool>>((ref) {
+  return Hive.box('isLogin');
+});

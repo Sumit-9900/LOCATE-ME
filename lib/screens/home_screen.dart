@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:locate_me/models/nextscreen_arguments.dart';
+import 'package:locate_me/riverpod/hive_box.dart';
 import 'package:locate_me/riverpod/location_provider.dart';
 import 'package:locate_me/riverpod/userbox_provider.dart';
 import 'package:locate_me/services/messages.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           'Locate Me',
           style: Style.style2,
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         elevation: 1.0,
         backgroundColor: Colors.greenAccent.shade400,
@@ -34,8 +36,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           IconButton(
             onPressed: () async {
               ref.read(userNotifierProvider.notifier).logOut();
+              final isLogin = ref.read(isLoginBox);
+              final locationBox = ref.read(locationBoxProvider);
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('/', (route) => false);
+              isLogin.put('isLogin', false);
+              await locationBox.deleteAll(locationBox.keys);
+              data.isVisible = false;
               successMssg('LogOut Successfully!');
             },
             icon: const Icon(Icons.logout),
